@@ -1,0 +1,35 @@
+{
+  "name": "telegram-mini-app",
+  "version": "1.0.0",
+  "description": "Telegram Web App - (Uses July 7, 2024, Bot API 7.7)",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikiyasET/Telegram-Mini-App.git"
+  },
+  "keywords": [
+    "telegram-web-app",
+    "telegram-mini-app",
+    "telegram",
+    "telegram-bot",
+    "telegram web apps",
+    "telegram mini apps",
+    "telegram bot",
+    "telegram bot api"
+  ],
+  "author": "mikiyaset",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikiyasET/Telegram-Mini-App/issues"
+  },
+  "homepage": "https://github.com/mikiyasET/Telegram-Mini-App#readme",
+  "devDependencies": {
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.3"
+  }
+}
