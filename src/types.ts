@@ -21,46 +21,63 @@ export type WebAppType = {
     HapticFeedback: HapticFeedback;
     CloudStorage: CloudStorage;
     BiometricManager: BiometricManager;
-    isVersionAtLeast: (version: string) => boolean;
-    setHeaderColor: (color: "bg_color" | "secondary_bg_color") => void;
-    setBackgroundColor: (color: ColorThemeTypes | ColorHexType) => void;
-    enableClosingConfirmation: Function;
-    disableClosingConfirmation: Function;
-    enableVerticalSwipes: Function;
-    disableVerticalSwipes: Function;
-    onEvent: <T extends EventTypes>(
+    isVersionAtLeast(version: string): (version: string) => boolean;
+    setHeaderColor(color: "bg_color" | "secondary_bg_color"): (color: "bg_color" | "secondary_bg_color") => void;
+    setBackgroundColor(color: ColorThemeTypes | ColorHexType): (color: ColorThemeTypes | ColorHexType) => void;
+    enableClosingConfirmation(): Function;
+    disableClosingConfirmation(): Function;
+    enableVerticalSwipes(): Function;
+    disableVerticalSwipes(): Function;
+    onEvent<T extends EventTypes>(
+        eventType: T,
+        eventHandler: (params: EventHandlers[T]) => unknown
+    ): <T extends EventTypes>(
         eventType: T,
         eventHandler: (params: EventHandlers[T]) => unknown
     ) => void;
-    offEvent: <T extends EventTypes>(
+    offEvent<T extends EventTypes>(
+        eventType: T,
+        eventHandler: (params: EventHandlers[T]) => unknown
+    ): <T extends EventTypes>(
         eventType: T,
         eventHandler: (params: EventHandlers[T]) => unknown
     ) => void;
-    sendData: (data: unknown) => void;
-    switchInlineQuery: (
+    sendData(data: unknown): (data: unknown) => void;
+    switchInlineQuery(
+        query: string,
+        choose_chat_types?: Array<"users" | "bots" | "groups" | "channels">
+    ): (
         query: string,
         choose_chat_types?: Array<"users" | "bots" | "groups" | "channels">
     ) => void;
-    openLink: (url: string, options?: { try_instant_view: boolean }) => void;
-    openTelegramLink: (url: string) => void;
-    openInvoice: (
+    openLink(url: string, options?: { try_instant_view: boolean }): (url: string, options?: {
+        try_instant_view: boolean
+    }) => void;
+    openTelegramLink(url: string): (url: string) => void;
+    openInvoice(
+        url: string,
+        callback?: (status: InvoiceStatus) => unknown
+    ): (
         url: string,
         callback?: (status: InvoiceStatus) => unknown
     ) => void;
-    showPopup: (params: PopupParams, callback?: (id?: string) => unknown) => void;
-    showAlert: (message: string, callback?: () => unknown) => void;
-    showConfirm: (message: string, callback?: (confirmed: boolean) => void) => void;
-    showScanQrPopup: (
+    showPopup(params: PopupParams, callback?: (id?: string) => unknown): (params: PopupParams, callback?: (id?: string) => unknown) => void;
+    showAlert(message: string, callback?: () => unknown): (message: string, callback?: () => unknown) => void;
+    showConfirm(message: string, callback?: (confirmed: boolean) => void): (message: string, callback?: (confirmed: boolean) => void) => void;
+    showScanQrPopup(
+        params: ScanQrPopupParams,
+        callback?: (text: string) => void | true
+    ): (
         params: ScanQrPopupParams,
         callback?: (text: string) => void | true
     ) => void;
-    closeScanQrPopup: () => void;
-    readTextFromClipboard: (callback?: (text: string) => unknown) => void;
-    requestWriteAccess: (callback?: (access: boolean) => unknown) => void;
-    requestContact: (callback?: (access: boolean) => unknown) => void;
-    ready: Function;
-    expand: Function;
-    close: Function;
+    closeScanQrPopup(): () => void;
+    readTextFromClipboard(callback?: (text: string) => unknown): (callback?: (text: string) => unknown) => void;
+    requestWriteAccess(callback?: (access: boolean) => unknown): (callback?: (access: boolean) => unknown) => void;
+    requestContact(callback?: (access: boolean) => unknown): (callback?: (access: boolean) => unknown) => void;
+    ready(): Function;
+    expand(): Function;
+    close(): Function;
 }
 export type WebAppInitData = {
     query_id?: string;
@@ -110,10 +127,10 @@ export type ThemeParams = {
 }
 export type BackButton = {
     isVisible: boolean;
-    onClick: (cb: Function) => void;
-    offClick: (cb: Function) => void;
-    show: Function;
-    hide: Function;
+    onClick(callback: Function): (callback: Function) => void;
+    offClick(callback: Function): (callback: Function) => void;
+    show(): Function;
+    hide(): Function;
 }
 export type MainButton = {
     text: string;
@@ -122,16 +139,22 @@ export type MainButton = {
     isVisible: boolean;
     isActive: boolean;
     isProgressVisible: boolean;
-    setText: (text: string) => void;
-    onClick: (callback: Function) => void;
-    offClick: (callback: Function) => void;
-    show: Function;
-    hide: Function;
-    enable: Function;
-    disable: Function;
-    showProgress: (leaveActive?: boolean) => void;
-    hideProgress: Function;
-    setParams: (params: {
+    setText(text: string): (text: string) => void;
+    onClick(callback: Function): (callback: Function) => void;
+    offClick(callback: Function): (callback: Function) => void;
+    show(): Function;
+    hide(): Function;
+    enable(): Function;
+    disable(): Function;
+    showProgress(leaveActive?: boolean): (leaveActive?: boolean) => void;
+    hideProgress(): Function;
+    setParams(params: {
+        color?: string;
+        text?: string;
+        text_color?: string;
+        is_active?: boolean;
+        is_visible?: boolean;
+    }): (params: {
         color?: string;
         text?: string;
         text_color?: string;
@@ -141,38 +164,56 @@ export type MainButton = {
 }
 export type SettingsButton = {
     isVisible: boolean;
-    onClick: (callback: Function) => SettingsButton;
-    offClick: (callback: Function) => SettingsButton;
-    show: () => SettingsButton;
-    hide: () => SettingsButton;
+    onClick(callback: Function): (callback: Function) => SettingsButton;
+    offClick(callback: Function): (callback: Function) => SettingsButton;
+    show(): () => SettingsButton;
+    hide(): () => SettingsButton;
 }
 export type HapticFeedback = {
-    impactOccurred: (style: ImpactOccurredStyleType) => HapticFeedback;
-    notificationOccurred: (type: StatusType) => HapticFeedback;
-    selectionChanged: () => HapticFeedback;
+    impactOccurred(style: ImpactOccurredStyleType): (style: ImpactOccurredStyleType) => HapticFeedback;
+    notificationOccurred(type: StatusType): (type: StatusType) => HapticFeedback;
+    selectionChanged(): () => HapticFeedback;
 }
 export type CloudStorage = {
-    setItem: (
+    setItem(
+        key: CloudStorageKey,
+        value: CloudStorageValue,
+        callback?: (error: string | null, result?: boolean) => void
+    ): (
         key: CloudStorageKey,
         value: CloudStorageValue,
         callback?: (error: string | null, result?: boolean) => void
     ) => void;
-    getItem: (
+    getItem(
+        key: CloudStorageKey,
+        callback?: (error: string | null, result?: CloudStorageValue) => void
+    ): (
         key: CloudStorageKey,
         callback?: (error: string | null, result?: CloudStorageValue) => void
     ) => void;
-    getItems: (
+    getItems(
+        keys: Array<CloudStorageKey>,
+        callback?: (error: string | null, result?: CloudStorageItems) => void
+    ): (
         keys: Array<CloudStorageKey>,
         callback?: (error: string | null, result?: CloudStorageItems) => void
     ) => void;
-    getKeys: (
+    getKeys(
+        callback?: (error: string | null, result?: Array<CloudStorageKey>) => void
+    ): (
         callback?: (error: string | null, result?: Array<CloudStorageKey>) => void
     ) => void;
-    removeItem: (
+    removeItem(
+        key: CloudStorageKey,
+        callback?: (error: string | null, result?: boolean) => void
+    ): (
         key: CloudStorageKey,
         callback?: (error: string | null, result?: boolean) => void
     ) => void;
-    removeItems: (
+    removeItems(
+        key: Array<CloudStorageKey>,
+        callback?: (error: string | null, result?: boolean) => void
+    ): (
         key: Array<CloudStorageKey>,
         callback?: (error: string | null, result?: boolean) => void
     ) => void;
@@ -185,11 +226,11 @@ export type BiometricManager = {
     isAccessGranted: boolean;
     isBiometricTokenSaved: boolean;
     deviceId: string;
-    init: (callback?: () => unknown) => unknown;
-    requestAccess: (params: BiometricRequestAccessParams, callback?: (access: string) => unknown) => void;
-    authenticate: (params: BiometricAuthenticateParams, callback?: (authenticated: boolean, token: string) => unknown) => void;
-    updateBiometricToken: (token: string, callback?: (updated: boolean) => unknown) => unknown;
-    openSettings: Function;
+    init(callback?: () => unknown): (callback?: () => unknown) => unknown;
+    requestAccess(params: BiometricRequestAccessParams, callback?: (access: string) => unknown): (params: BiometricRequestAccessParams, callback?: (access: string) => unknown) => void;
+    authenticate(params: BiometricAuthenticateParams, callback?: (authenticated: boolean, token: string) => unknown): (params: BiometricAuthenticateParams, callback?: (authenticated: boolean, token: string) => unknown) => void;
+    updateBiometricToken(token: string, callback?: (updated: boolean) => unknown): (token: string, callback?: (updated: boolean) => unknown) => unknown;
+    openSettings(): Function;
 }
 export type GroupChannelCategoryTypes = 'group' | 'supergroup' | 'channel';
 export type DefaultCategoryTypes = "sender" | "private" | "group" | "supergroup" | "channel";
@@ -239,11 +280,11 @@ export type PopupParams = {
     buttons?: PopupButton[];
 }
 export type PopupButton = { id?: string; } & ({
-        type: "default" | "destructive";
-        text: string;
-    } | {
-        type: "ok" | "close" | "cancel";
-    });
+    type: "default" | "destructive";
+    text: string;
+} | {
+    type: "ok" | "close" | "cancel";
+});
 export type ScanQrPopupParams = {
     text?: string;
 }

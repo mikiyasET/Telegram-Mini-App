@@ -1,6 +1,6 @@
 {
   "name": "telegram-mini-app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Telegram Web App - (Uses July 7, 2024, Bot API 7.7)",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/mikiyasET/Telegram-Mini-App#readme",
   "devDependencies": {
+    "@changesets/cli": "^2.27.7",
     "tsup": "^8.1.0",
     "typescript": "^5.5.3"
   }
